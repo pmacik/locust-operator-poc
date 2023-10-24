@@ -43,3 +43,8 @@ deploy-locust:
 undeploy-locust:
 	@kubectl delete namespace $(LOCUST_NAMESPACE) --wait
 	@helm repo remove $(LOCUST_OPERATOR_REPO)
+
+# to avoid pull rate limits from docker.io
+.PHONY: add-dockercfg-dockerio
+add-dockercfg-dockerio:
+	@TOKEN=$(DOCKERIO_TOKEN) ./add-dockercfg-docker.io.sh
