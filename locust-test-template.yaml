@@ -5,7 +5,7 @@ metadata:
 spec:
   image: locustio/locust:latest
   masterCommandSeed: --locustfile /lotest/src/locust_test.py
-    --host https://localhost
+    --host ${HOST}
     --users ${USERS}
     --spawn-rate ${SPAWN_RATE}
     --run-time ${DURATION}

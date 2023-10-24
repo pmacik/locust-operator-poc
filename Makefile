@@ -1,4 +1,5 @@
 export SCENARIO ?= locust-test
+export HOST ?= http://localhost
 export USERS ?= 100
 export WORKERS ?= 5
 export DURATION ?= 1m
@@ -24,6 +25,8 @@ clean:
 test:
 	cat locust-test-template.yaml | envsubst | oc apply --namespace $(LOCUST_NAMESPACE) -f -
 	oc create --namespace $(LOCUST_NAMESPACE) configmap locust.$(SCENARIO) --from-file locust_test.py
+	oc wait --for=condition=Ready=true $$(oc get pod -l performance-test-pod-name=$(SCENARIO)-test-master -o name)
+	oc logs --namespace $(LOCUST_NAMESPACE) -f -l performance-test-pod-name=$(SCENARIO)-test-master
 
 .PHONY: deploy-locust
 deploy-locust:
