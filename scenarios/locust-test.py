@@ -10,7 +10,7 @@ class UserScenario(User):
         w = random.random()
         print(f"Sleeping for {w}s")
         time.sleep(w)
-        if w > 1.75:
+        if w > 0.75:
             self._report_failure("tick", "fast-tick", w*1000.0, "too late!")
         else:
             self._report_success("tick", "fast-tick", w*1000.0)
