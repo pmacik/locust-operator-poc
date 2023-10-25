@@ -24,7 +24,7 @@ clean:
 .PHONY: test
 test:
 	cat locust-test-template.yaml | envsubst | oc apply --namespace $(LOCUST_NAMESPACE) -f -
-	oc create --namespace $(LOCUST_NAMESPACE) configmap locust.$(SCENARIO) --from-file locust_test.py
+	oc create --namespace $(LOCUST_NAMESPACE) configmap locust.$(SCENARIO) --from-file scenarios/$(SCENARIO).py
 	oc wait --for=condition=Ready=true $$(oc get pod -l performance-test-pod-name=$(SCENARIO)-test-master -o name)
 	oc logs --namespace $(LOCUST_NAMESPACE) -f -l performance-test-pod-name=$(SCENARIO)-test-master
 

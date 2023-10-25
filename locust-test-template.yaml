@@ -4,11 +4,11 @@ metadata:
   name: ${SCENARIO}.test
 spec:
   image: locustio/locust:latest
-  masterCommandSeed: --locustfile /lotest/src/locust_test.py
+  masterCommandSeed: --locustfile /lotest/src/${SCENARIO}.py
     --host ${HOST}
     --users ${USERS}
     --spawn-rate ${SPAWN_RATE}
     --run-time ${DURATION}
-  workerCommandSeed: --locustfile /lotest/src/locust_test.py
+  workerCommandSeed: --locustfile /lotest/src/${SCENARIO}.py
   workerReplicas: ${WORKERS}
   configMap: locust.${SCENARIO}
