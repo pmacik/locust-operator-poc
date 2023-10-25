@@ -1,19 +1,16 @@
 from locust import User, task, events
 from locust.exception import LocustError
-import time
 import random
 
 
-class LocustTest(User):
+class RandomTest(User):
     @task
     def tick(self) -> None:
-        w = random.random()
-        print(f"Sleeping for {w}s")
-        time.sleep(w)
-        if w > 0.75:
-            self._report_failure("tick", "fast-tick", w*1000.0, "too late!")
+        w = random.random()*1000.0
+        if w > 750:
+            self._report_failure("random", "value", w, "too much!")
         else:
-            self._report_success("tick", "fast-tick", w*1000.0)
+            self._report_success("random", "value", w)
 
     def _report_success(self, category, name, response_time):
         events.request.fire(
